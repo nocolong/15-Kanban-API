@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using _15_Kanban_API;
+using _15_Kanban_API.Models;
+using AutoMapper;
 
 namespace _15_Kanban_API.Controllers
 {
@@ -23,16 +25,26 @@ namespace _15_Kanban_API.Controllers
         }
 
         // GET: api/Cards/5
-        [ResponseType(typeof(Card))]
+        [ResponseType(typeof(CardModel))]
         public IHttpActionResult GetCard(int id)
         {
             Card card = db.Cards.Find(id);
             if (card == null)
             {
+
                 return NotFound();
             }
+           //var cardModel = new CardModel();
+           //cardModel.CardId = card.CardId;
+           //cardModel.ListId = card.ListId;
+           //cardModel.Name = card.Name;
+           //cardModel.Text = card.Text;
+           //cardModel.CreatedDate = card.CreatedDate;
 
-            return Ok(card);
+            var x = Mapper.Map<CardModel>(card);            
+            
+
+            return Ok(x);
         }
 
         // PUT: api/Cards/5
@@ -71,18 +83,33 @@ namespace _15_Kanban_API.Controllers
         }
 
         // POST: api/Cards
-        [ResponseType(typeof(Card))]
-        public IHttpActionResult PostCard(Card card)
+        [ResponseType(typeof(CardModel))]
+        public IHttpActionResult PostCard(CardModel cardModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Cards.Add(card);
-            db.SaveChanges();
+            //Instantiate data Database Card object
+            var dbCard = new Card();
 
-            return CreatedAtRoute("DefaultApi", new { id = card.CardId }, card);
+            //Fill in Database Card object properties with cardModel properties
+            //..
+            dbCard.Name = cardModel.Name;
+            dbCard.ListId = cardModel.ListId;
+            dbCard.Text = cardModel.Text;
+            dbCard.CreatedDate = cardModel.CreatedDate;
+            dbCard.CardId = cardModel.CardId;
+            
+            //Save to Database
+            db.Cards.Add(dbCard);
+
+            //Update Database
+            db.SaveChanges();
+                     
+
+            return CreatedAtRoute("DefaultApi", new { id = dbCard.CardId }, cardModel);
         }
 
         // DELETE: api/Cards/5

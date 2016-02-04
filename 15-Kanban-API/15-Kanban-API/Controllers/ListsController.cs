@@ -23,6 +23,7 @@ namespace _15_Kanban_API.Controllers
         {
             return Mapper.Map<IEnumerable<ListModel>>(db.Lists);
         }
+
         [Route("api/lists/{listId}/cards")]
         public IEnumerable<CardModel> GetCardsForList(int listId)
         {
