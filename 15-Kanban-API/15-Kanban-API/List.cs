@@ -22,10 +22,10 @@ namespace _15_Kanban_API
         }
         public List(ListModel model)
         {
-            this.Update(model);
+            Name = model.Name;
             CreatedDate = DateTime.Now;
         }
-    
+
         public int ListId { get; set; }
         public string Name { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -36,6 +36,7 @@ namespace _15_Kanban_API
         public void Update(ListModel model)
         {
             Name = model.Name;
+            CreatedDate = DateTime.Now;
 
         }
     }

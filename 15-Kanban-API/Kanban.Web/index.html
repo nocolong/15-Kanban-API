@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html ng-app="kanban">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <style>
+        body{
+            background: #00ccff;
+        }
+    </style>
+</head>
+<body ng-controller="IndexController">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">               
+                <a class="navbar-brand" href="#">Kanban</a>
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid" style="margin-top: 60px;">
+
+
+        <div class="row">
+            <div class="col-sm-6 col-lg-3" ng-repeat="list in data.lists">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span ng-show="list.Edit">
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="list.Name" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="saveList(list)">
+                                        <i class="fa fa-save"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </span>
+                        <span ng-hide="list.Edit">
+                        <span ng-click="list.Edit = true">{{list.Name}}</span>
+                            <a class="text-danger pull-right" ng-click="removeList(list)">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </span>
+                        
+                       
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="panel panel-default" ng-repeat="card in list.cards">
+                            <div class="panel-body">
+                                {{card.Text}}
+                                <a class="text-danger pull-right" ng-click="removeCard(card)">
+                                <i class="fa fa-remove"></i>
+                                </a>
+                            </div>
+                        </div>                       
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Add card.." ng-model="list.newCard.Description">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="addCard(list)">
+                                <i class="fa fa-plus"></i>
+
+                                </button>                           
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="data.newList.Name" placeholder="Add List..">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="addList()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div><!-- /input-group -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         </div>
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

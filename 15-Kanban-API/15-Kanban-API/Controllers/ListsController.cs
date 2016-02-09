@@ -97,6 +97,7 @@ namespace _15_Kanban_API.Controllers
 
             list.CreatedDate = dbList.CreatedDate;
             list.ListId = dbList.ListId;
+            list.Name = dbList.Name;
 
             db.Lists.Add(dbList);
             db.SaveChanges();
